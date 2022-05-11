@@ -1,0 +1,28 @@
+fib:: Integer => Integer
+fib 0 = 0                                   f1
+fib 1 = 1                                   f2
+fib n = (fib (n-1)) + (fib (n-2))           f3
+
+//handy proof
+fib 3 ? :
+fib 3 =: fib 0 match faile
+
+fib 3 =: fib 1 match faile
+
+fib 3 =: fib n match [n:-3]
+(fib (n-1)) + (fib (n-1)) subsituted [n:-3]  to RHS of f3
+= (fib (3-1)) + (fib (3-2))
+= (fib (2)) + (fib(1))
+
+    fib 2                                                  
+    fib 2 =: fib 0 faile   
+    fib 2 =: fib 1 faile
+    fib 2 =: fib n match [n=:2]
+    =(fib(2-1)) + (fib(2-2))
+    =fib 1 + fib 0
+
+    fib 1 =: fib 0 faile        
+    fib 1 =: fib 1 match    []
+
+    fib 0 =: fib 0 match    []
+    
