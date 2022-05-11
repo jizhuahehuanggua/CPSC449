@@ -1,0 +1,55 @@
+foldr:: (a->b->b)->b->[a]->b
+foldr f b [] = b
+foldr f b (x:xs) = f x (foldr f b xs)
+
+mord:: Ord a => a -> [a] -> Bool
+mord x = foldr (\a b -> (a==x) || ((x>=a) && b)) False 
+
+
+(||) :: Bool->Bool->Bool
+(||) False  b = b
+(||) _  _ = True
+
+(&&) :: Bool->Bool->Bool
+(&&) True b = b
+(&&) _  _ = False
+
+mord 2 [1,4,8,11,22] ？
+mord 2 [1,4,8,11,22] :=  mord x [1,4,8,11,22]  ...match [ x := 2 ]
+    = foldr (\a b -> (a==x) || ((x>=a) && b)) False [1,4,8,11,22] [ x:= 2 ]
+    = foldr (\a b -> (a==2) || ((2>=a) && b )) False [1,4,8,11,22]
+
+    = foldr (\a b -> (a==2) || ((2>=a) && b )) False [1,4,8,11,22] ?
+    = foldr f b [] = b ... match fail
+    = foldr f b (x:xs) = f x (foldr f b xs) ...match [ f := (\a b -> (a==2) || ((2>=a) && b )), b := False, x := 1, xs := [4,8,11,22]]
+                       = f x (foldr f b xs) [f := (\a b -> (a==2) || ((2>=a) && b )), b := False, x:= 1,  xs := [4,8,11,22]]   
+                        = (\a b -> (a==2) || ((2>=a) && b )) 1 (foldr (\a b -> (a==2) || ((2>=a) && b )) False [4,8,11,22])     --substitude anonymous function
+                                = (1 == 2) || ((2>=1) && (foldr (\a b -> (a==2) || ((2>=a) && b )) False [4,8,11,22])) ?
+                                = (1 == 2) || ((2>=1) && (foldr (\a b -> (a==2) || ((2>=a) && b )) False [4,8,11,22])) =: (||) False b 
+                                    | 1 == 2
+                                    | False  
+                                            = b [b := (2>=1) && (foldr (\a b -> (a==2) || ((2>=a) && b )) False [4,8,11,22])] = (&&) True b 
+                                                             | 2>=1
+                                                             | True 
+                                                            = b [b := (foldr (\a b -> (a==2) || ((2>=a) && b )) False [4,8,11,22]) ]
+                                                                = (foldr (\a b -> (a==2) || ((2>=a) && b )) False [4,8,11,22]) ?
+                                                                = foldr f b [] = b ...match fail
+                                                                = foldr f b (x:xs) ...match [ f := (\a b -> (a==2) || ((2>=a) && b )), b := False, x := 4, xs := [8,11,22]]
+                                                                                    = f x (foldr f b xs) [ f := (\a b -> (a==2) || ((2>=a) && b )), b := False, x := 4, xs := [8,11,22]]
+                                                                                    = (\a b -> (a==2) || ((2>=a) && b )) 4 (foldr (\a b -> (a==2) || ((2>=a) && b )) False [8,11,22]) 
+                                                                                            = (4==2) || ((2>=4) && b )) 4 (foldr (\a b -> (a==2) || ((2>=a) && b ) False [8,11,22] ? 
+                                                                                            = (4==2) || ((2>=4) && b )) 4 (foldr (\a b -> (a==2) || ((2>=a) && b ) False [8,11,22] = (||) False b 
+                                                                                                     | 4 == 2
+                                                                                                     | False 
+                                                                                                        = b [b := (2>=4) && (foldr (\a b -> (a==2) || ((2>=a) && b )) False [8,11,22])] = (&&) True b 
+                                                                                                                                                                | 2>=4
+                                                                                                                                                                | False ...match fail
+                                                                                                                                                                =: (&&) _ _ ...match []
+                                                                                                                                                                = False 
+                                                                                                        = False 
+                                                                                    = False 
+                                                                = False
+                                            = False 
+                        = False 
+    = False 
+

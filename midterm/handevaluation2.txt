@@ -1,0 +1,55 @@
+enum :: Int -> [Int]
+enum n = n : enum (n+1)
+
+myzip [] _ = []
+myzip _ [] = []
+myzip (a:as) (b:bs) = (a,b): (myzip as bs)
+
+myfold :: (a -> b -> b) -> b -> [a] -> b
+myfold f b [] = b
+myfold f b (a:as) = f a (myfold f b as)
+
+grow xs = myfold f [] (myzip (enum 1) xs)
+
+myzip (enum 17) [1,2,3] ?
+myzip [] _ ...match fail
+myzip _ [] ...match fail
+myzip (a:as) (b:bs) =: enum 17
+        | enum 17 
+        = enum n ...match [n := 17]
+        = n : enum (n + 1)
+        = 17 : enum (18) 
+        ...match [a := 17, as := enum 18, b := 1, bs := [2,3]]
+        = (a,b): (myzip as bs)
+        = (17,1) : (myzip (enum 18) [2,3])
+                 = myzip (enum 18) [2,3]
+                 = myzip [] _ ...match fail
+                 = myzip _ [] ...match fail
+                 = myzip (a:as) (b:bs) =: enum 18
+                            | enum 18 
+                            = enum n ...match [n := 18]
+                            = n : enum (n + 1)
+                            = 18 : enum (19) 
+                            ...match [a := 18, as := enum 19, b := 2, bs := [3]]
+                            = (a,b): (myzip as bs)
+                            = (18, 2) : (myzip (enum 19) [3])
+                                        = myzip (enum 19) [3]
+                                        = myzip [] _ ...match fail
+                                        = myzip _ [] ...match fail
+                                        = myzip (a:as) (b:bs) =: enum 19
+                                                   | enum 19
+                                                   = enum n ...match [n := 19]
+                                                   = n : enum (n + 1)
+                                                   = 19 : enum (20) 
+                                                   ...match [a := 19, as := enum 20, b := 3, bs := []]
+                                                   = (a,b): (myzip as bs)
+                                                   = (19, 3) : (myzip (enum 20) [])
+                                                                = myzip [] _ ...match fail
+                                                                = myzip _ [] ...match []
+                                                                = []
+                                                    = (19,3) : []
+                                                    = [(19,3)]
+                            = (18,2): [(19,3)]
+                            =  [(18,2),(19,3)]
+        = (17,1) : [(18,2),(19,3)]
+        = [(17,1),(18,2),(19,3)]
