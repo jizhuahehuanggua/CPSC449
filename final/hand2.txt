@@ -1,0 +1,12 @@
+intree 2 (Snode (Snode Tip 11 Tip) 2 (Snode Tip 7 Tip)) ?
+intree 2 (Snode (Snode Tip 11 Tip) 2 (Snode Tip 7 Tip)) =: intree n Tip  ...match fail
+intree 2 (Snode (Snode Tip 11 Tip) 2 (Snode Tip 7 Tip)) =: intree n (Snode t1 m t2)  ...match [n := 2, t1 := (Snode Tip 11 Tip), m := 2, t2 := (Snode Tip 7 Tip)]
+    = (n == m) || (intree n t1 || intree n t2) 	[n := 2, t1 := (Snode Tip 11 Tip), m := 2, t2 := (Snode Tip 7 Tip)]
+    = (2 == 2) || (intree 2 (Snode Tip 11 Tip) || intree 2 (Snode Tip 7 Tip)) 
+    = (2 == 2) || (intree 2 (Snode Tip 11 Tip) || intree 2 (Snode Tip 7 Tip)) ?
+        (2 == 2) || (intree 2 (Snode Tip 11 Tip) || intree 2 (Snode Tip 7 Tip)) =: False || b  
+        | 2 == 2
+        | True  ...match fail
+    = (2 == 2) || (intree 2 (Snode Tip 11 Tip) || intree 2 (Snode Tip 7 Tip)) =: _ || _   ...match []
+    = True
+= True

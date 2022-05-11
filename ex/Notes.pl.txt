@@ -1,0 +1,188 @@
+% ssh into school's computer prolog
+%
+% load prolog
+%
+% opening file "Notes.pl"
+%   swipl Notes.pl
+%   or start prolog and ["Notes"]
+%
+% to stop prolog, type "halt." (or Ctrl-d)
+% "make." reloads the file
+
+% Prolog has 3 basic constructs:
+% - facts (used to state things that are unconditionally true of some situation of interest)
+% - rules
+% - queries
+%
+% Prolog will search for the query TOP DOWN (just like Haskell pattern matching)
+%
+% A collection of facts is called a "knowledge base"
+% To use a program, provide queries to the knowledge base!
+%   i.e. ask it a question
+
+%%%%%%%%
+% Example facts:
+%%%%%%%%
+
+tautology.
+myfunc(a).
+
+
+% first letter should be lower cased! the upper case letters are prolog variables
+% don't forget to put "."
+%
+% Keep calm and smash Ctrl-d if things goes wrong
+
+
+%%%%%%%%
+% Example rules:
+%%%%%%%%
+% Rules state information that is conditionally true of the situation of interest
+% read ":-" as 
+%   - "if"
+%   - "is implied by"
+% A :- B means "if B then A", or "A is implied by B"
+% A is called the head of the rule, and B is called the body.
+
+'449midterm'.
+cpsc449.
+
+a.
+easy :- '449midterm'.
+
+
+
+g :- f(a) , f(c).
+
+%%%%%%%%
+% Example queries:
+%%%%%%%%
+% semicolon ";" stands for "or"
+% comma "," means "or"
+% upper cased is prolog variable (place holder for information)
+
+
+
+%%%%%%%%
+% Prolog syntax
+%%%%%%%%
+% what are facts, rules and queries built out of?
+% they are built from "terms"
+%
+% total of 4 terms:
+%   - atoms
+%   - numbers
+%   - variables
+%   - complex terms
+%
+% Basic characters:
+%   - upper cased letters (A ... Z)
+%   - lower cased letters (a ... z)
+%   - digits (0 ... 9)
+%   - underscore "_"
+%   - special characters: + , - , * , / , < , > , = , : , . , & , ~ . (non-exhaustive)
+%   - blank space is a character
+%   - string is a contiguous sequence of characters
+%
+
+% What is a Atom
+% - a string of characters (including upper,lower case, digits, and underscore) that BEGINS with a LOWER CASED characters
+% - arbitrary sequence of chars enclosed by SINGLE quotes (double quotes are strings ... different type)
+
+
+% What is a number (apparently obvious)
+%
+% What are variables
+% - a string of characters (including upper,lower case, digits, and underscore) that begins with either an upper cased characters or with an underscore.
+% - "_" is a special anonymous variable (just like Haskell)
+%   - if you give it a name it will give you warning
+%
+% What are complex terms
+%   - built out of a "functor" followed by a sequence of arguments (functor here really just means a function)
+%   - arguments are put into brackets, separated by commas
+%   - functor MUST be directly followed by pair of brackets (no spaces in between are allowed)
+%   - functor MUST be an atom
+%   - arguments can be any kind of term
+%
+%  functor(arg1,arg2,...,argn)
+%
+% the number of arguments of a complex term is called "arity"
+% prolog allows overloading the same functor name with different arity.
+
+f(a).
+f(b,c).
+
+
+% when talking about predicates, it is usual to use a suffix "/" followed by a number to indicate the predicate's arity.
+% for example: f/1, g/2
+%
+%
+%
+
+%%%%%%%
+% Pop quizzzzzzzzzzzzzz
+%%%%%%%
+% What are atoms
+%   - myatom
+%   - MyFaketom
+%   - 420whoAmI
+%   - '420WhatAboutMe'
+%   - '420 me too'
+%
+%
+%
+%
+% What are variables?
+%   - Variable
+%   - okVariable?
+%   - _AmIVariable
+%   - _howAboutMe
+%   - 'OrMe'
+%   - _420
+%
+%
+%
+%
+%
+% What are complex terms?
+%   - complexTerm(dog)
+%   - NotComplexterm()
+%   - _stillNotComplex()
+%   - _SStillNotComplex()
+%   - ==>(how, about, me)
+%   - ==>(h0w, ab0uT, mE)
+% 
+
+%
+%
+%
+% What are the output of the following query:
+% (we don't discuss negations yet! Just accept the queries now)
+% try it with a variable
+
+
+successful(dat).
+successful(kristap).
+successful(cockett).
+successful(jojo).
+
+
+unsuccessful(me).
+goodhair(you).
+
+engineer(jojo).
+
+mathematician(dat).
+mathematician(kristap).
+mathematician(me).
+
+hasJob(X) :- successful(X), engineer(X).
+noJob(X) :- unsuccessful(X) ; mathematician(X).
+
+
+% what is the output of:
+%   - unsuccessful(me).
+%   - goodhair(me).
+%   - noJob(me).
+%   - hasJob(me).
+%   - noJob(X).

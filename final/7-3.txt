@@ -1,0 +1,20 @@
+(1)	{[s∣ ]}=[s]
+(2)	{[s∣x←t,r]}=concat (map (\x→{[s∣r]}) t)
+(3)	{[s∣p,r]}=if p then {[s∣r]} else []
+
+misery m xs = [ys | ys <- pain xs, m >= (foldr (+) 0 ys)]
+
+concat (map (\ys→{ [ys∣m >= (foldr (+) 0 ys)] }) pain xs)	(2)
+
+		[ys∣m >= (foldr (+) 0 ys)]	
+
+		if (m >= (foldr (+) 0 ys)) then {[ys∣]} else []	(3)
+
+					 [ys∣] 		(1)
+					 [ys]
+
+
+concat (map (\ys→{ if (m >= (foldr (+) 0 ys)) then {[ys]} else [] }) pain xs)
+
+
+misery m xs = concat (map (\ys→ if (m >= (foldr (+) 0 ys)) then [ys] else [] ) (pain xs))

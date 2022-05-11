@@ -1,0 +1,20 @@
+(1) remove(X,[X|Xs],Xs).
+(2) remove(X,[H|Y],[H|Ys]):- 
+    (2.1)remove(X,Y,Ys).
+
+goal: remove(X,[a,b],Y).
+	unify with (1) remove(X1,[X1|Xs1],Xs1). success {X1/X, a/X1, [b]/Xs1, [b]/Y1}
+		body empty : answer     **X = X1 = a, Y = [b]**; (force backtracking)
+	unify with (2) remove(X1,[H1|Y1],[H1|Ys1]) success {X1/X, a/H1, [b]/Y1, [a|Ys1]/Y1}
+		 body(2.1): remove(X1,Y1,Ys1). {X1/X, a/H1, [b]/Y1, [a|Ys1]/Y1}
+			=remove(X1,[b],Ys1)
+		 		unify with (1) remove(X2,[X2|Xs2],Xs2). success{b/X1, []/Xs2, []/Ys1}
+					body empty : answer     **X1 = b, Y1 = [a|[]] = [a]; (force backtracking)
+				unify with (2) remove(X,[H|Y],[H|Ys]). success {X2/X1, b/H2, []/Y2, [b|Ys2]/Ys1}
+					body(2.1): remove(X2,Y2,Ys2). {X2/X1, b/H2, []/Y2, [b|Ys2]/Ys1}
+						=remove(X, [], Ys2)
+							unify with (1) remove(X3,[X3|Xs3],Xs3). fail!
+                                					unify with (2) remove(X3,[H3|Y3],[H3|Ys3]). fail!
+						False.
+
+

@@ -1,0 +1,44 @@
+1.
+[X|[g(X,X),Z]] and [X,Z,X]
+
+X ?=? X, g(X,X) ?=? Z, Z ?=? X
+g(X,X) := Z, Z := X
+then g(X,X) := X
+it has cycle, false. 
+
+
+2.
+[X,Y,Z] and [g(Y,Z)| [[] | Y]] 
+
+[X,Y|[Z]]=[g(Y,Z)|[[]|Y]]
+X ?=? g(Y,Z), [Y|[Z]] ?=? [[]|Y]
+X := g(Y,Z), Y := [], [Z] := Y
+then [Z] := []
+then false.
+
+3.
+[X,Y,Z] and [W|W]
+X ?=? W, W ?=? [Y,Z]
+X := [Y,Z]
+there is no conflict, thus it is true
+
+4.
+[R|[S,f(S,R)]] and [X,f(Y,Z),X]
+
+R ?=? X, S ?=? f(Y,Z), f(S,R) ?=? X
+R := X, S := f(Y,Z), f(S,R) := X
+R := f(S,R)
+
+there exist cycle, thus it is false.
+
+5.
+[Z,2,W] and [f(X,Y),X|[f(Y,X)]]
+
+Z ?=? f(X,Y), 2 ?=? X, W ?=? f(Y,X)
+Z := f(X,Y), 2 := X, W := f(Y,X)
+
+[Z,2,W] = [f(X,Y),X,f(Y,X)]
+
+thus success, it is true
+
+

@@ -1,0 +1,169 @@
+(1) filter([],_,[]).                                
+(2) filter([X|Xs],G,[X|Ys]):- 
+    (2.1) Z=..[G,X], 
+    (2.2) Z, !,
+    (2.3) filter(Xs,G,Ys).
+(3) filter([_|Xs],G,Ys):-
+    (3.1) filter(Xs,G,Ys).
+
+(4) g(X):- 
+    (4.1) X<10.
+goal: 
+filter([1,23,9,22],g,L)
+unify with (1) fail!
+unify with (2) success {1/X1, [23,9,22]/Xs1, g/G1,[1|Ys1]/L}
+  body (2.1) : Z1 = ..[G1,X1] {g/G1, 1/X1, g(1)/Z1}
+    = Z1 = g(1)  
+  body (2.2) : Z1, !, {g(1)/Z1}
+    = g(1), !
+    unify with (4) success {1/X}
+      body (4.1) : 1 < 10 **true
+  body (2.3) : filter(Xs1,G1,Ys1) {[23,9,22]/Xs1, g/G1, Ys1/Ys1}
+  = filter([23,9,22], g, Ys1)
+  unify with (1) fail!
+  unify with (2) success {23/X2, [9,22]/Xs2, g/G2, [23|Ys2]/Ys1}
+    body (2.1) : Z2 = ..[G2, X2] {g/G2, 23/X2, g(23)/Z2}
+      = Z2 = g(22)
+    body (2.2) : Z2, !, {g(23)/Z2}
+      = g(23), !
+      unify with (4) success {23/X}
+        body (4.1) : 23 < 10 **false
+  unify with (3) success {23/_, [9,22]/Xs2, g/G2, Ys2/Ys1}
+    body (3.1) : filter(Xs2,G2,Ys2)
+      = filter([9,22],g,Ys2)
+      unify with (1) fail!
+      unify with (2) success {9/X3, [22]/Xs3, g/G3, [9|Ys3]/Ys2}
+        body (2.1) : Z3 = ..[G3, X3]
+          = Z3 = g(9)
+        body (2.2) : Z3, !, {g(9)/Z3}
+          = g(9), !
+          unify with (4) success {g(9)/Z3}
+            body (4.1) : 9 < 10 **true
+        body (2.3) : filter(Xs3, G3, Ys3) {[22]/Xs3, g/G3, [X3|Ys3]/Ys2}
+        = filter([22],g,Ys3)
+        unify with (1) fail!
+        unify with (2) success {22/X4, []/Xs4, g/G4,[22|Ys4]/Ys3}
+          body (2.1) : Z4 = ..[G4, X4]
+            = Z4 = g(22)
+          body (2.2) : Z4, !, {g(22)/Z4}
+            = g(22), !
+            unify with (4) success {g(22)/Z4}
+              body (4.1) : 22 < 10 ** false
+        unify with (3) success {22/_, []/Xs4, g/G4, Ys4/Ys3}  
+          body (3.1) : filter(Xs4,G,Ys4)
+          = filter([],g,Ys4).
+          unify with (1) success {[]/[], g/_, Ys3/[]}
+            (1) filter([],_,[]).                                
+(2) filter([X|Xs],G,[X|Ys]):- 
+    (2.1) Z=..[G,X], 
+    (2.2) Z, !,
+    (2.3) filter(Xs,G,Ys).
+(3) filter([_|Xs],G,Ys):-
+    (3.1) filter(Xs,G,Ys).
+
+(4) g(X):- 
+    (4.1) X<10.
+goal: 
+filter([1,23,9,22],g,L)
+unify with (1) fail!
+unify with (2) success {1/X1, [23,9,22]/Xs1, g/G1,[1|Ys1]/L}
+  body (2.1) : Z1 = ..[G1,X1] {g/G1, 1/X1, g(1)/Z1}
+    = Z1 = g(1)  
+  body (2.2) : Z1, !, {g(1)/Z1}
+    = g(1), !
+    unify with (4) success {1/X}
+      body (4.1) : 1 < 10 **true
+  body (2.3) : filter(Xs1,G1,Ys1) {[23,9,22]/Xs1, g/G1, Ys1/Ys1}
+  = filter([23,9,22], g, Ys1)
+  unify with (1) fail!
+  unify with (2) success {23/X2, [9,22]/Xs2, g/G2, [23|Ys2]/Ys1}
+    body (2.1) : Z2 = ..[G2, X2] {g/G2, 23/X2, g(23)/Z2}
+      = Z2 = g(22)
+    body (2.2) : Z2, !, {g(23)/Z2}
+      = g(23), !
+      unify with (4) success {23/X}
+        body (4.1) : 23 < 10 **false
+  unify with (3) success {23/_, [9,22]/Xs2, g/G2, Ys2/Ys1}
+    body (3.1) : filter(Xs2,G2,Ys2)
+      = filter([9,22],g,Ys2)
+      unify with (1) fail!
+      unify with (2) success {9/X3, [22]/Xs3, g/G3, [9|Ys3]/Ys2}
+        body (2.1) : Z3 = ..[G3, X3]
+          = Z3 = g(9)
+        body (2.2) : Z3, !, {g(9)/Z3}
+          = g(9), !
+          unify with (4) success {g(9)/Z3}
+            body (4.1) : 9 < 10 **true
+        body (2.3) : filter(Xs3, G3, Ys3) {[22]/Xs3, g/G3, [X3|Ys3]/Ys2}
+        = filter([22],g,Ys3)
+        unify with (1) fail!
+        unify with (2) success {22/X4, []/Xs4, g/G4,[22|Ys4]/Ys3}
+          body (2.1) : Z4 = ..[G4, X4]
+            = Z4 = g(22)
+          body (2.2) : Z4, !, {g(22)/Z4}
+            = g(22), !
+            unify with (4) success {g(22)/Z4}
+              body (4.1) : 22 < 10 ** false
+        unify with (3) success {22/_, []/Xs4, g/G4, Ys4/Ys3}  
+          body (3.1) : filter(Xs4,G,Ys4)
+          = filter([],g,Ys4).
+          unify with (1) success {[]/[], g/_, Ys3/[]}
+             body empty : answer **L = [1|Ys1] Ys1 = Ys2 Ys2 =[9|Ys3] Ys3 = Ys4 Ys4 = []
+                                  L = [1,9]
+            
+
+answer:
+L = [1,9].
+ 
+            
+
+answer:
+L = [1,9].
+ 
+
+ /******************************************************************
+
+This is a rather powerful aspect of prolog as it means that one predicate
+can serve many purposes.  Here we can use the predicate to put an element
+somewhere in the list OR (for examle) to remove an element from a list --
+although that was not, perhaps, our original intention!
+
+Let us consider evaluating
+           insert(1,[2,3],Z).
+first we note that there is a free variable Z in this predicate.  The evaluation
+has the effect of instantiating the variable and what we have to show is how
+that variable gets instantiated ...
+
+Let us lable the clauses of insert:
+
+(1) insert(X,Y,[X|Y]).
+(2) insert(X,[H|Y],[H|Z]) :- insert(X,Y,Z).
+
+Now whenever we pick up a clause we will do so with completely new variables
+then we have:
+
+goal:  insert(1,[2,3],Z).
+          unify with (1) insert(X1,Y1,[X1|Y1]) success {1/X1,[2,3]/Y1,[1,2,3]/Z}
+	       body empty: answer        ** Z=[1,2,3] ** ; (force backtracking)
+	  unify with (2) insert(X2,[H2|Y2],[H2|Z2]) success {1/X2,2/H2,[3]/Y2,[2|Z2]/Z}
+	        body (2.1): insert(X2,Y2,Z2) {1/X2,2/H2,[3]/Y2,[2|Z2]/Z}
+		 = insert(1,[3],Z2)
+		     unify with (1) insert(X3,Y3,[X3|Y3])
+				  success {1/X3,[3]/Y3,[1,3]/Z2}
+	               body empty: answer Z2=[1,3],         **Z= [2,1,3]** ;  (force backtracking)
+		     unify with (2) insert(X4,[H4|Y4],[H4|Z4])
+				   success {1/X4,3/H4,[]/Y4,[3|Z4]/Z2}
+		        body (2.1): insert(X4,Y4,Z4){1/X4,3/H4,[]/Y4,[3|Z4]/Z2}
+	                = insert(1,[],Z4)
+			   unify with (1) insert(X5,Y5,[X5|Y5])
+				       success {1/X5,[]/Y5,[1]/Z4}
+		           body empty: answer Z4=[1],Z2=[3,1],         **Z=[2,3,1]**; (force backtracking)
+			   unify with (2) insert((X6,[H6|Y6],[H6|Z6])
+			                fail!!
+
+There is quite alot happening but it is not completely unlike the Haskell hand evaluation: here
+we use unification and we are non-deterministic in the sense that one we get a match we may
+backtrack to find another match.
+
+*******************************************************************/
+	  
