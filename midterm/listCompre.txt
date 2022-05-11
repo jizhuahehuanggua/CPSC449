@@ -1,0 +1,18 @@
+rule 1: {[s∣ ]}=[s]
+rule 2: {[s∣x←t,r]}=concat (map (\x→{[s∣r]}) t)
+rule 3: {[s∣p,r]}=if p then {[s∣r]} else []
+
+
+pops xss = [ (x,length xs) | xs <- xss, x <- xs, x <= length xs]
+  where
+    length :: [a] -> Int
+    length [] = 0
+    length (a:as) = 1 + length as
+      [ (x,length xs) | xs <- xss, x <- xs, x <= length xs]          = concat(map (\xs -> ([(x,length xs) | x <- xs, x <= length xs ])) xss   )       			rule 2
+	[(x,length xs) | x <- xs, x <= length xs ]				 =concat(map(\x -> ([(x,length xs) | x <= length xs])   )  xs )			rule 2
+                       [(x,length xs) | x <= length xs]                  		 			  =if (x <= length xs) then [(x,length xs) | ] else []		rule 3
+                         [(x,length xs) | ]                 						    		          = [(x,length xs)]		rule 1
+
+
+
+pops xss = concat(map (\xs -> (  concat(map(\x -> (if (x <= length xs) then [(x,length xs) ] else [])   )  xs ) )) xss   )      
